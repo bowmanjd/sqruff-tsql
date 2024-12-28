@@ -1,0 +1,16 @@
+[package]
+name = "lineage"
+version.workspace = true
+repository.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+append-only-vec = "0.1.5"
+indexmap.workspace = true
+polonius-the-crab = "0.4.1"
+sqruff-lib-core = { workspace = true }
+sqruff-lib-dialects = { workspace = true }
