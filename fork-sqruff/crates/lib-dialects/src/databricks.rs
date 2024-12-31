@@ -179,7 +179,18 @@ pub fn dialect() -> Dialect {
             .into(),
         ),
         (
+            // A reference to a database.
             "DatabaseReferenceSegment".into(),
+            Ref::new("ObjectReferenceSegment").to_matchable().into(),
+        ),
+        (
+            // A reference to an table, CTE, subquery or alias.
+            "TableReferenceSegment".into(),
+            Ref::new("ObjectReferenceSegment").to_matchable().into(),
+        ),
+        (
+            // A reference to a schema.
+            "SchemaReferenceSegment".into(),
             Ref::new("ObjectReferenceSegment").to_matchable().into(),
         ),
         (
@@ -225,6 +236,30 @@ pub fn dialect() -> Dialect {
                     false,
                 )
                 .into(),
+        ),
+        (
+            // A `DECLARE [OR REPLACE] VARIABLE` statement.
+            // https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-declare-variable.html
+            "DeclareOrReplaceVariableStatementSegment".into(),
+            Sequence::new(vec_of_erased![
+                Ref::keyword("DECLARE"),
+                Ref::new("OrReplaceGrammar").optional(),
+                Ref::keyword("VARIABLE").optional(),
+                Ref::new("SingleIdentifierGrammar"),
+                Ref::new("DatatypeSegment").optional(),
+                Sequence::new(vec_of_erased![
+                    one_of(vec_of_erased![
+                        Ref::keyword("DEFAULT"),
+                        Ref::new("EqualsSegment")
+                    ]),
+                    Ref::new("ExpressionSegment"),
+                ])
+                .config(|config| {
+                    config.optional();
+                }),
+            ])
+            .to_matchable()
+            .into(),
         ),
         // `COMMENT ON` statement.
         // https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-comment.html
@@ -293,6 +328,24 @@ pub fn dialect() -> Dialect {
         .to_matchable(),
     );
 
+    // The main table expression e.g. within a FROM clause.
+    // Enhance to allow for additional clauses allowed in Spark and Delta Lake.
+    databricks.replace_grammar(
+        "TableExpressionSegment",
+        sparksql::dialect()
+            .grammar("TableExpressionSegment")
+            .match_grammar()
+            .unwrap()
+            .copy(
+                Some(vec_of_erased![Ref::new("IdentifierClauseSegment")]),
+                None,
+                Some(Ref::new("ValuesClauseSegment").to_matchable()),
+                None,
+                Vec::new(),
+                false,
+            ),
+    );
+
     // Override statement segment
     databricks.replace_grammar(
         "StatementSegment",
@@ -310,6 +363,7 @@ pub fn dialect() -> Dialect {
                     Ref::new("SetTimeZoneStatementSegment"),
                     Ref::new("OptimizeTableStatementSegment"),
                     Ref::new("CommentOnStatementSegment"),
+                    Ref::new("DeclareOrReplaceVariableStatementSegment"),
                 ]),
                 None,
                 None,
