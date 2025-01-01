@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:bowmanjd/fork-sqruff.git
+	branch = tsql
+	commit = cb1370dc7b52e95e6912a4ac852e1a6fdaf37acb
+	parent = a1c87782084acaff0c2c4af6e44154f29aaff59e
+	method = merge
+	cmdver = 0.4.9

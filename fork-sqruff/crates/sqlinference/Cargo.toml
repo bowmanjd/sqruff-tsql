@@ -1,0 +1,15 @@
+[package]
+name = "sqruff-sqlinference"
+version.workspace = true
+repository.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+sqruff-lib-core = { workspace = true }
+
+[dev-dependencies]
+sqruff-lib-dialects = { workspace = true }
