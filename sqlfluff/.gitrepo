@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:sqlfluff/sqlfluff.git
+	branch = main
+	commit = b4f0a1bf9cf8914537d196308e9aa4aea7aa6b4b
+	parent = 321602f458986d1ea138dfa3047c6a8f99a582f4
+	method = merge
+	cmdver = 0.4.9
