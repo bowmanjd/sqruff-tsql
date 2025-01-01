@@ -6,7 +6,7 @@
 [subrepo]
 	remote = git@github.com:bowmanjd/fork-sqruff.git
 	branch = main
-	commit = 79c41c67304e1dc33fc096f3c032f3047d488a09
-	parent = a2bd8f2a650131492d1821e06062b7f23a02bdf3
+	commit = 115780ce63d59e08524f0bd4933d15caea23c328
+	parent = 8af23d3909c76d3808dd11f2d8125dbff361ca2d
 	method = merge
 	cmdver = 0.4.9
