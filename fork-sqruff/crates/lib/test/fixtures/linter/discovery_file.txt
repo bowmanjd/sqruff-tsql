@@ -1,2 +1,0 @@
--- This is a text file to test discovery of configured file extensions.
-SELECT 1
